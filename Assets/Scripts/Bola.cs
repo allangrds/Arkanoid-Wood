@@ -6,6 +6,8 @@ public class Bola : MonoBehaviour
 {
     public Vector3 direction;
     public float speed;
+    public GameObject blocksParticle;
+    public ParticleSystem leafsParticle;
 
     // Use this for initialization
     void Start()
@@ -34,6 +36,11 @@ public class Bola : MonoBehaviour
             {
                 invalidCollision = true;
             }
+            else
+            {
+                leafsParticle.transform.position = collision.transform.position;
+                leafsParticle.Play();
+            }
         }
         else if (edgeGenerator != null)
         {
@@ -45,6 +52,14 @@ public class Bola : MonoBehaviour
         else //Caso entre no else, estamos colidindo com um bloco
         {
             invalidCollision = false;
+            Bounds collisionBorders = collision.transform.GetComponent<SpriteRenderer>().bounds;
+            Vector3 creationPosition = new Vector3(collision.transform.position.x + collisionBorders.extents.x,
+                collision.transform.position.y - collisionBorders.extents.y,
+                collision.transform.position.z);
+            GameObject particles = (GameObject) Instantiate(blocksParticle, creationPosition, Quaternion.identity); //instancia particula na posição do colisor
+            ParticleSystem particleComponent = particles.GetComponent<ParticleSystem>();
+
+            Destroy(particles, particleComponent.duration + particleComponent.startLifetime);
             Destroy(collision.gameObject); //contém referência do objeto que a bolinha colidiu
         }
 
