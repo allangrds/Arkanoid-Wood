@@ -61,11 +61,13 @@ public class Bola : MonoBehaviour
 
             Destroy(particles, particleComponent.duration + particleComponent.startLifetime);
             Destroy(collision.gameObject); //contém referência do objeto que a bolinha colidiu
+            
+            GerenciadorDoGame.numberOfBlocksDestroyed += 1;
         }
 
         if (invalidCollision)
         {
-            GerenciadorDoGame.endGame();
+            GerenciadorDoGame.istance.endGame();
         }
         else
         {

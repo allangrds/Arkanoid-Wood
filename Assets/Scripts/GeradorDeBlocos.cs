@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class GeradorDeBlocos : MonoBehaviour
@@ -22,6 +23,8 @@ public class GeradorDeBlocos : MonoBehaviour
         int columns;
 
         CollectBlockInformations(blockWidth, out screenWidth, out screenHeight, out columns, out widthMultiplier);
+
+        GerenciadorDoGame.numberOfBlockInGame = columns * lines;
 
         for (int i = 0; i < lines; i++)
         {
